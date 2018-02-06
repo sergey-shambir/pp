@@ -6,31 +6,50 @@
 
 constexpr unsigned MAX_THREADS = 100;
 
+#if defined(_WIN32)
+constexpr char DIR_SEPARATOR = '\\';
+#else
+constexpr char DIR_SEPARATOR = '/';
+#endif
+
 struct CommandLineArgs
 {
 	unsigned iterationsCount = 0;
 	unsigned threadCount = 0;
 };
 
+std::string GetApplicationName(int argc, char* argv[])
+{
+	if (argc < 1)
+	{
+		return "program";
+	}
+	const std::string path = argv[0];
+	const size_t from = path.find_last_of(DIR_SEPARATOR);
+	return path.substr((from == std::string::npos) ? 0 : from);
+}
+
 void PrintUsage(const std::string& selfName)
 {
-	std::cout
-		<< "Calculates PI using Monte-Carlo heuristic method"
-		<< "Usage: " << selfName << " <iterations_count> <thread_count>" << std::endl;
+	std::cerr
+		<< "Calculates PI using Monte-Carlo heuristic method\n"
+		<< "Usage:\n"
+		<< "  single-threaded: " << selfName << " <iterations_count>\n"
+		<< "  multi-threaded: " << selfName << " <iterations_count> <thread_count>\n";
 }
 
 CommandLineArgs ParseCommandLineArgs(int argc, char* argv[])
 {
-	if (argc != 3)
+	if (argc < 2 || argc > 3)
 	{
-		throw std::logic_error("missing required arguments");
+		throw std::logic_error("wrong argument count");
 	}
 	CommandLineArgs args;
 	args.iterationsCount = std::stoul(argv[1]);
-	args.threadCount = std::stoul(argv[2]);
+	args.threadCount = (argc > 2) ? std::stoul(argv[2]) : 1u;
 	if (args.iterationsCount == 0 || args.threadCount == 0)
 	{
-		throw std::invalid_argument("arguments cannot be zero");
+		throw std::invalid_argument("argument cannot be zero");
 	}
 	if (args.threadCount > MAX_THREADS)
 	{
@@ -49,8 +68,8 @@ int main(int argc, char* argv[])
 	}
 	catch (const std::exception& ex)
 	{
-		std::cout << ex.what() << std::endl;
-		PrintUsage((argc > 0) ? argv[0] : "program");
+		std::cerr << "ERROR: " << ex.what() << "\n";
+		PrintUsage(GetApplicationName(argc, argv));
 		return 1;
 	}
 
@@ -63,7 +82,7 @@ int main(int argc, char* argv[])
 	}
 	catch (const std::exception& ex)
 	{
-		std::cerr << "FATAL ERROR: " << ex.what() << std::endl;
+		std::cerr << "FATAL ERROR: " << ex.what() << "\n";
 	}
 
     return 0;
