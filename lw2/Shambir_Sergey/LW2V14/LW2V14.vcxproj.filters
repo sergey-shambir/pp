@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{a7e500cd-056a-482f-9e97-383e76ed8553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winapi">
+      <UniqueIdentifier>{e0aa8e09-97e4-4bb8-9eb7-d4f23c9e35bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{26d46e5b-aceb-47ad-8a35-a7aaf02821e1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="winapi_raii.h">
+      <Filter>winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="Handle.h">
+      <Filter>winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="SemaphoreLock.h">
+      <Filter>winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinMutex.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncOut.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="winapi_raii.cpp">
+      <Filter>winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="SemaphoreLock.cpp">
+      <Filter>winapi</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
